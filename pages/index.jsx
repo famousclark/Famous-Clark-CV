@@ -54,7 +54,7 @@ function Index() {
         }}
       >
         <Box bgcolor={" rgba(0,0,0,.7);"}>
-          <Container component="span" sx={{ mb: 4 }} maxWidth="xl">
+          <Container component="span" sx={{ my: 4 }} maxWidth="xl">
             <Box
               display="flex"
               direction="column"
@@ -63,19 +63,27 @@ function Index() {
               sx={{ height: "100vh" }}
             >
               <Typography
-                sx={{ whiteSpace: "pre-line" }}
+                sx={{
+                  mx: 4,
+                  display: { xs: "none", md: "flex" },
+                }}
                 color="text.primary"
                 variant="h2"
                 component="h2"
                 gutterBottom
               >
-                <Box sx={{ mx: 4, fontStyle: "normal" }}>Famous Clark |</Box>
-
-                {/* {`until it breaks.`} */}
+                Famous Clark {/* {`until it breaks.`} */}
               </Typography>
-
+              <Divider
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                }}
+                orientation="vertical"
+                flexItem
+              />
               <Typography
-                sx={{ whiteSpace: "pre-line" }}
+                sx={{ mx: 4 }}
+                //sx={{ whiteSpace: "pre-line" }}
                 color="text.primary"
                 variant="h6"
                 component="h3"

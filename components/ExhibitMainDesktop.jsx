@@ -12,12 +12,6 @@ import Typography from "@mui/material/Typography";
 import { styled, alpha, useTheme } from "@mui/material/styles";
 
 import FamousCard from "./Artists/FamousCard";
-import JesseCard from "./Artists/JesseCard";
-import OluCard from "./Artists/OluCard";
-import MichaelCard from "./Artists/MichaelCard";
-import XuwenCard from "./Artists/XuwenCard";
-import TimCard from "./Artists/TimCard";
-import JoshCard from "./Artists/JoshCard";
 
 // #region Helper Styled Components
 const StyledPaper = styled(Paper)(({ theme }) => ({

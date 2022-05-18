@@ -38,7 +38,7 @@ function MyApp(
       <SessionProvider session={session}>
         <CacheProvider value={emotionCache}>
           <Head>
-            <title>until it breaks.</title>
+            <title>Famous Clark</title>
             <meta
               name="viewport"
               content="initial-scale=1, width=device-width"
