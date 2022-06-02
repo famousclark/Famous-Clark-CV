@@ -202,7 +202,7 @@ function StyledDialogPromptForm(props) {
       ...form,
       userFragment: handleFragmentContext(),
       userPrompt: handlePromptContext(),
-      model: cheapModel,
+      model: noModel,
       username: handleUserNameSplit(session.user.name),
       deckIndex: deckIndex,
       orientation: handleOrientation(),

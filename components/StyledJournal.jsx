@@ -261,7 +261,7 @@ function StyledJournal(props) {
 
     const toSubmit = {
       ...form,
-      model: cheapModel,
+      model: noModel,
       occultInfluence: occultInfluence,
       userPrompt: handlePromptContext(),
     };
