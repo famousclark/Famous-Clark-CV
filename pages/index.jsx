@@ -91,7 +91,7 @@ function Index() {
                 {`I am independent game developer focusing on integrations 
                 between mythology, artificial intelligence, and identity. My work looks into 
                 integrating artificial intelligence and proto-feminism, developing technology 
-                that queers cultural memory and experience. As such he intends to further 
+                that queers cultural memory and experience. As such I intend to further 
                 queering cultural memory via speculating on developing queer experiences with 
                 advancing technology by combining artificial intelligence and feminist cultural 
                 histories such as early western occult practices.`}
@@ -137,7 +137,7 @@ function Index() {
           </Box>
 
           <Box sx={{ flexDirection: "column", mb: 8 }}>
-            {/* <ExhibitFooter /> */}
+            <ExhibitFooter />
           </Box>
           <StyledBottomAppBar bottom={true} />
         </Box>

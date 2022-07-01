@@ -15,7 +15,7 @@
     "await-spawn": "^4.0.2",
     "child-process-promise": "^2.2.1",
     "mongoose": "^6.3.3",
-    "next": "^12.1.6",
+    "next": "^12.2.0",
     "next-auth": "^4.3.4",
     "openai": "^2.0.5",
     "prop-types": "^15.8.1",

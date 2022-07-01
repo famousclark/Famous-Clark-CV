@@ -9,6 +9,12 @@ import Typography from "@mui/material/Typography";
 import { styled, alpha, useTheme } from "@mui/material/styles";
 
 import FamousCard from "./Artists/FamousCard";
+import ProjectIFCard from "./Artists/ProjectIFCard";
+import AngelCard from "./Artists/AngelCard";
+import ForestCard from "./Artists/ForestCard";
+import TrainCard from "./Artists/TrainCard";
+import StationCard from "./Artists/StationCard";
+import StationTwoCard from "./Artists/StationTwoCard";
 
 // #region Helper Styled Components
 const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -29,7 +35,31 @@ function ExhibitMainMobile() {
     <>
       <Divider sx={{ mt: 4, mb: 4 }} component="div" />
 
+      <StationTwoCard />
+
+      <Divider sx={{ mt: 4, mb: 4 }} component="div" />
+
+      <StationCard />
+
+      <Divider sx={{ mt: 4, mb: 4 }} component="div" />
+
+      <TrainCard />
+
+      <Divider sx={{ mt: 4, mb: 4 }} component="div" />
+
+      <ForestCard />
+
+      <Divider sx={{ mt: 4, mb: 4 }} component="div" />
+
       <FamousCard />
+
+      <Divider sx={{ mt: 4, mb: 4 }} component="div" />
+
+      <ProjectIFCard />
+
+      <Divider sx={{ mt: 4, mb: 4 }} component="div" />
+
+      <AngelCard />
 
       <Divider sx={{ mt: 4, mb: 4 }} component="div" />
     </>

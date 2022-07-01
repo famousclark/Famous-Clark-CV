@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 
 import { styled, alpha, useTheme } from "@mui/material/styles";
 
-function FamousCard() {
+function AngelCard() {
   // #region function rendering
   return (
     <>
@@ -26,11 +26,11 @@ function FamousCard() {
           justifyContent="center"
           alignItems="stretch"
         >
-          <Grid item xs={12} sm={12} md={8} lg={8}>
+          <Grid item xs={12} sm={12} md={4} lg={4}>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <CardContent sx={{ flex: "1 0 auto" }}>
                 <Typography component="div" variant="h4">
-                  The Gestalt Game
+                  Project 4N63L 'Angel'
                 </Typography>
                 <Typography
                   variant="subtitle1"
@@ -51,19 +51,13 @@ function FamousCard() {
                 </Typography>
 
                 <Typography color="text.primary" variant="body2" gutterBottom>
-                  {` I am fascinated by the potential of artificial intelligence in
-                  gaming. I believe that AI should be reframed in more queer
-                  terms such as symbiotic intelligence and can create new and
-                  unique intra-active experiences that are not possible with
-                  traditional game design. I am constantly exploring new ways to
-                  use AI in games, and I believe that the future of gaming will
-                  be shaped by artificial intelligence. I am particularly
-                  interested in the potential of AI in creating queer gaming
-                  experiences. I believe that AI can create characters and
-                  storylines that are not possible with traditional game design.
-                  The future of human computer intra-action can benefit from
-                  being shaped by queer symbiosis of anthropocentrism and
-                  artificial intelligence.`}
+                  {`Immoral behaviors in video games can cause a feeling of guilt from the experiencer. What modern video games, especially the 
+                  role-playing genre, offer is the perception of moral choice and agency. The use of influential narrating figures, story agency, 
+                  and character attachment offers an unprecedented level of immersion into modern video games. This level of immersion brought 
+                  about by technological fidelity is akin to audience perceptions in visual mediums like film and television. Where video games 
+                  differ is their incorporation of agency and choice. The morality of choice that video games offer is a unique feature that separates 
+                  its evolution and audience reception from similar visual mediums. However, as experiencers begin to recognize narrative and 
+                  affective patterns common throughout the genre, the gravity of their agency and moral sensitivity can and does alter.`}
                 </Typography>
 
                 <Typography
@@ -75,12 +69,9 @@ function FamousCard() {
                 </Typography>
 
                 <Typography color="text.primary" variant="body2" gutterBottom>
-                  {`The Gestalt Journal is an intra-active experience between players and an artificial intelligence generated through OpenAI’s GPT-3 system. 
-              The Gestalt Journal is played alongside {Ada}, a symbiotic intellect. 
-              Players give a few lines of script or fragment and a prompt to {Ada}, and in return {Ada} uses some black magic to interpret and complete the fragment. 
-              This can occur through the 22 steps of the major arcana of a Tarot deck, beginning at the fool and ending at the world. 
-              Each step’s writing is mixed with the essence of corresponding arcana and {Ada’s} own interpretation to make a unique and unexpected story. 
-              Through human and computer interaction, the player and {Ada} work to make an unprecedented gestalt of shared narrative and cyborgian experience.`}
+                  {`4N63L or {Angel} is a branhcing dialogue based game made in the style of retro text based adventures. The project explores
+                  the concept of interacting with virtual agents, as an exploration of cyborgian symbiosis between user and increasingly human-like
+                  technologies.`}
                 </Typography>
               </CardContent>
               {/* <CardActions>
@@ -107,14 +98,12 @@ function FamousCard() {
           </Grid>
 
           <Grid item xs>
-            {/* <CardActionArea sx={{ width: 1, height: 1 }} href="/tarot"> */}
             <CardMedia
               component="img"
               sx={{ width: 1, height: 1 }}
-              image="/Images/Arcana/Arcana-0.jpg"
-              alt="Fool-Arcana"
+              image="/Images/Friend.jpg"
+              alt="Project 4N63L"
             />
-            {/* </CardActionArea> */}
           </Grid>
         </Grid>
       </Card>
@@ -123,4 +112,4 @@ function FamousCard() {
   // #endregion function rendering
 }
 
-export default FamousCard;
+export default AngelCard;

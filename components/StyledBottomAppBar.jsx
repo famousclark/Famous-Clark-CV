@@ -40,8 +40,8 @@ function StyledBottomAppBar(props) {
   const { bottom } = props;
   const pages = [
     { name: "Home", route: "/" },
-    { name: "Gestalt", route: "gestalt/" },
-    { name: "Tarot", route: "tarot/" },
+    //{ name: "Gestalt", route: "gestalt/" },
+    //{ name: "Tarot", route: "tarot/" },
   ];
   const settings = [/*"Profile", "Account", "Dashboard",*/ "Auth"];
   // #endregion function Props and variables
