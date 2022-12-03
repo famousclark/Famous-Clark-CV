@@ -63,7 +63,9 @@ function TrainCard() {
                 </Typography>
 
                 <Typography color="text.primary" variant="body2" gutterBottom>
-                  {`Metro Interior.`}
+                  {`Metro Interior.
+                  
+                   | Blender`}
                 </Typography>
               </CardContent>
               {/* <CardActions>

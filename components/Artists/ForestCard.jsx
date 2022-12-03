@@ -63,7 +63,8 @@ function ForestCard() {
                 </Typography>
 
                 <Typography color="text.primary" variant="body2" gutterBottom>
-                  {`Small forest with intertwing river.`}
+                  {`Small forest with intertwing river.  
+                  | Blender`}
                 </Typography>
               </CardContent>
               {/* <CardActions>

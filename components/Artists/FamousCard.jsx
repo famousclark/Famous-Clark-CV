@@ -82,9 +82,13 @@ function FamousCard() {
               Each step’s writing is mixed with the essence of corresponding arcana and {Ada’s} own interpretation to make a unique and unexpected story. 
               Through human and computer interaction, the player and {Ada} work to make an unprecedented gestalt of shared narrative and cyborgian experience.`}
                 </Typography>
+
+                <Typography color="primary" variant="h5" gutterBottom>
+                  {`To test project - contact me | famouscl@buffalo.edu`}
+                </Typography>
               </CardContent>
-              {/* <CardActions>
-                <Button
+              <CardActions>
+                {/* <Button
                   sx={{ mr: 1 }}
                   color="warning"
                   variant="outlined"
@@ -101,8 +105,8 @@ function FamousCard() {
                   size="small"
                 >
                   Get Fortune from (AI)
-                </Button>
-              </CardActions> */}
+                </Button> */}
+              </CardActions>
             </Box>
           </Grid>
 

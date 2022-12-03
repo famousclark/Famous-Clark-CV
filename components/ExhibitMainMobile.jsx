@@ -9,6 +9,11 @@ import Typography from "@mui/material/Typography";
 import { styled, alpha, useTheme } from "@mui/material/styles";
 
 import FamousCard from "./Artists/FamousCard";
+import FantasiaInRougeCard from "./Artists/FantasiaInRougeCard";
+import FantasiaInRouge01Card from "./Artists/FantasiaInRouge01Card";
+import FantasiaInRouge02Card from "./Artists/FantasiaInRouge02Card";
+import FantasiaInRouge03Card from "./Artists/FantasiaInRouge03Card";
+import FantasiaInRouge04Card from "./Artists/FantasiaInRouge04Card";
 import ProjectIFCard from "./Artists/ProjectIFCard";
 import AngelCard from "./Artists/AngelCard";
 import ForestCard from "./Artists/ForestCard";
@@ -33,6 +38,26 @@ function ExhibitMainMobile() {
   // #region function rendering
   return (
     <>
+      <Divider sx={{ mt: 4, mb: 4 }} component="div" />
+
+      <FantasiaInRougeCard />
+
+      <Divider sx={{ mt: 4, mb: 4 }} component="div" />
+
+      <FantasiaInRouge01Card />
+
+      <Divider sx={{ mt: 4, mb: 4 }} component="div" />
+
+      <FantasiaInRouge02Card />
+
+      <Divider sx={{ mt: 4, mb: 4 }} component="div" />
+
+      <FantasiaInRouge03Card />
+
+      <Divider sx={{ mt: 4, mb: 4 }} component="div" />
+
+      <FantasiaInRouge04Card />
+
       <Divider sx={{ mt: 4, mb: 4 }} component="div" />
 
       <StationTwoCard />

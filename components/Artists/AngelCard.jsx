@@ -71,7 +71,12 @@ function AngelCard() {
                 <Typography color="text.primary" variant="body2" gutterBottom>
                   {`4N63L or {Angel} is a branhcing dialogue based game made in the style of retro text based adventures. The project explores
                   the concept of interacting with virtual agents, as an exploration of cyborgian symbiosis between user and increasingly human-like
-                  technologies.`}
+                  technologies. 
+                  | Unity Game Engine
+                  | Inkle 
+                  | JSON
+                  | C#
+                  `}
                 </Typography>
               </CardContent>
               {/* <CardActions>

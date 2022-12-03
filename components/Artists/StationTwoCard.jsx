@@ -63,7 +63,9 @@ function StationTwoCard() {
                 </Typography>
 
                 <Typography color="text.primary" variant="body2" gutterBottom>
-                  {`Metro Station Railway.`}
+                  {`Metro Station Railway.
+                  
+                   | Blender`}
                 </Typography>
               </CardContent>
               {/* <CardActions>

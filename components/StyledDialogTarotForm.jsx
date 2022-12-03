@@ -84,14 +84,14 @@ function StyledDialogTarotForm(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // const noModel = "";
+    const noModel = "";
     // const cheapModel = "text-ada-001";
     // const middleModel = "text-curie-001";
     // const bestModel = "text-davinci-002";
 
     const toSubmit = {
       ...form,
-      //model: middleModel,
+      model: noModel,
       deckIndex: Math.floor(Math.random() * Constants.ArcanaTags),
       orientation: handleOrientation(),
     };
