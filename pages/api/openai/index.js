@@ -128,8 +128,8 @@ export default async function handler(req, res) {
         const cheapModel = "text-ada-001";
         const middleModel = "text-curie-001";
         const bestModel = "text-davinci-002";
-        //console.log(req.body);
-        const completion = await openai.createCompletion(noModel, {
+        console.log(req.body);
+        const completion = await openai.createCompletion(req.body.model, {
           prompt: generatePrompt(
             req.body.deckIndex,
             req.body.userPrompt,
