@@ -1,5 +1,7 @@
 # Famous-Clark-CV
 
+Model is turned off by default - To turn on go to "../components/StyledTarotDrawList.jsx" line 298
+
 ## How to navigate REPO
 
 To install the REPO and run it locally,
