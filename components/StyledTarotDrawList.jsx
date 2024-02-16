@@ -92,7 +92,9 @@ function StyledActionCard(props) {
   // #endregion useSWR, useState, useSession
 
   // #region Session and data - error | loading | authentication checks
-  if (error) return "An error has occurred. Please Reload Page";
+  if (error) {
+    return "An error has occurred. Please Reload Page";
+  }
   if (prompting && !data) {
     return (
       <Dialog open={prompting}>
@@ -291,11 +293,12 @@ function StyledTarotDrawList(props) {
     const cheapModel = "text-ada-001";
     const middleModel = "text-curie-001";
     const bestModel = "text-davinci-002";
+    const newModel = "gpt-3.5-turbo-0125";
     //const options = { optimisticData: user, rollbackOnError: true }
     if (Object.keys(errs).length === 0) {
       setPrompting(true);
       const form = {
-        model: bestModel,
+        model: noModel,
         userPrompt: deckQuestionData.prompt,
         userFragment: hand,
         story: Constants.TAROT,

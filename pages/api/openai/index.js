@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAI } from "openai";
 
 import * as Constants from "../../../constants";
 
@@ -7,10 +7,13 @@ import dbConnect from "../../../lib/dbConnect";
 import Prompt from "../../../models/Prompt";
 import Response from "../../../models/Response";
 
-const configuration = new Configuration({
+// const configuration = new Configuration({
+//   apiKey: process.env.OPENAI_API_KEY,
+// });
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+  //organization: "org-n0vsTASY1T9qSHjcCkgFmJ3K",
 });
-const openai = new OpenAIApi(configuration);
 
 function generateTarotInsight(deckIndex, orientation) {
   let deckInsightString = [];
@@ -128,29 +131,53 @@ export default async function handler(req, res) {
         const cheapModel = "text-ada-001";
         const middleModel = "text-curie-001";
         const bestModel = "text-davinci-002";
-        console.log(req.body);
-        const completion = await openai.createCompletion(req.body.model, {
-          prompt: generatePrompt(
-            req.body.deckIndex,
-            req.body.userPrompt,
-            req.body.userFragment,
-            req.body.story,
-            req.body.orientation,
-            req.body.occultInfluence
-          ),
-          max_tokens: 256,
-          temperature: 0.5,
+        //console.log(req.body);
+        const completion = await openai.chat.completions.create({
+          messages: [
+            {
+              role: "system",
+              content: "You are a fortune teller designed to output fortunes.",
+            },
+            {
+              role: "user",
+              content: generatePrompt(
+                req.body.deckIndex,
+                req.body.userPrompt,
+                req.body.userFragment,
+                req.body.story,
+                req.body.orientation,
+                req.body.occultInfluence
+              ),
+            },
+          ],
+          model: "gpt-3.5-turbo-0125",
+          //response_format: { type: "json_object" },
         });
+        //console.log(completion);
+        console.log(completion.choices[0].message.content);
+        // const completion = await openai.createCompletion(req.body.model, {
+        //   prompt: generatePrompt(
+        //     req.body.deckIndex,
+        //     req.body.userPrompt,
+        //     req.body.userFragment,
+        //     req.body.story,
+        //     req.body.orientation,
+        //     req.body.occultInfluence
+        //   ),
+        //   max_tokens: 256,
+        //   temperature: 0.5,
+        // });
 
         res.status(201).json({
           success: true,
           prompt: req.body.userPrompt,
           fragment: req.body.userFragment,
-          data: completion.data.choices[0].text,
+          data: completion.choices[0].message.content,
           deckIndex: req.body.deckIndex,
           orientation: req.body.orientation,
         });
       } catch (error) {
+        console.log(error);
         res.status(400).json({ success: false });
       }
       break;
