@@ -298,7 +298,7 @@ function StyledTarotDrawList(props) {
     if (Object.keys(errs).length === 0) {
       setPrompting(true);
       const form = {
-        model: newModel,
+        model: noModel,
         userPrompt: deckQuestionData.prompt,
         userFragment: hand,
         story: Constants.TAROT,
