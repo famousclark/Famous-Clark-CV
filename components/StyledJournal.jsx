@@ -12,6 +12,8 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
+import CircularProgress from "@mui/material/CircularProgress";
+import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import Divider from "@mui/material/Divider";
 import Fab from "@mui/material/Fab";
@@ -49,15 +51,16 @@ const TransitionRight = (props) => {
 // #endregion Helper Styled Component
 
 // #region Helper Methods
-
-const useResponsesAPI = () => {
-  const { data, error } = useSWR("api_responses");
-  //console.log({ data });
+const useTarotAPI = (prompting) => {
+  const { data, error } = useSWR(() => (prompting ? "api_tarot" : null));
+  console.log(data);
   return {
-    responseData: data,
-    responseError: !data & error,
+    data: data,
+    error,
   };
 };
+
+const responseData = " test";
 
 const handleUserNameSplit = (name) => {
   const nameArray = name.split(" ");
@@ -73,12 +76,21 @@ const scrollToBottom = (ref) => {
 
 function StyledJournal(props) {
   // #region function props and variables
-  const { toggleDrawer, deckIndex } = props;
+  const {
+    toggleDrawer,
+    deckIndex,
+    postData,
+    storyData,
+    savedStory,
+    setPrompting,
+    prompting,
+  } = props;
   const theme = useTheme();
   const router = useRouter();
   // #endregion function props and variables
 
   // #region useSWR, useState, useSession, useEffect
+  const { data, error } = useTarotAPI(prompting);
 
   const [form, setForm] = React.useState({
     userPrompt: "",
@@ -86,13 +98,13 @@ function StyledJournal(props) {
   });
 
   const [story, setStory] = React.useState([
-    { prompt: "", fragment: "", text: "" },
+    { prompt: "no new prompt", fragment: "\nno fragment", text: "no text" },
   ]);
 
   const [open, setOpen] = React.useState(false);
   const [errors, setErrors] = React.useState({});
   const [occultInfluence, setOccultInfluence] = React.useState(false);
-  const [branching, setBranching] = React.useState(true);
+  const [branching, setBranching] = React.useState(false);
   const [action, setAction] = React.useState({
     index: 0,
     actions: ["say", "do", "story"],
@@ -100,22 +112,22 @@ function StyledJournal(props) {
 
   const [addXtra, setAddXtra] = React.useState(false);
 
-  const [prompting, setPrompting] = React.useState(false);
+  //const [prompting, setPrompting] = React.useState(false);
   const [snackbar, setSnackbar] = React.useState(false);
   const [transition, setTransition] = React.useState(undefined);
 
-  const { data: session } = useSession();
-  const { responseData, responseError } = useResponsesAPI();
+  //const { data: session } = useSession();
+  //const { responseData, responseError } = useResponsesAPI();
 
   const responsesEndRef = useRef(null);
 
-  useEffect(() => {
-    scrollToBottom(responsesEndRef);
-  }, [session]);
+  // useEffect(() => {
+  //   scrollToBottom(responsesEndRef);
+  // }, [session]);
 
-  useEffect(() => {
-    scrollToBottom(responsesEndRef);
-  }, [story]);
+  // useEffect(() => {
+  //   scrollToBottom(responsesEndRef);
+  // }, [story]);
 
   // #endregion useSWR, useState, useSession, useEffect
 
@@ -150,8 +162,14 @@ function StyledJournal(props) {
   const handlePromptContext = () => {
     const contextFragment = form.userPrompt;
 
-    if (responseData[0] && form.userPrompt == "") {
-      contextFragment = responseData[0].prompt;
+    if (savedStory[0] && form.userPrompt == "") {
+      contextFragment = savedStory[0].prompt;
+      return contextFragment;
+    } else if (savedStory[0].text != "" && form.userPrompt != "") {
+      contextFragment =
+        savedStory[savedStory.length - 1].text +
+        ". and then " +
+        savedStory[0].prompt;
       return contextFragment;
     }
 
@@ -161,18 +179,18 @@ function StyledJournal(props) {
   const handleFragmentContext = () => {
     const contextFragment = "\n\n" + form.userFragment;
 
-    if (responseData[0] && branching) {
+    if (savedStory[0] && branching) {
       return contextFragment;
     }
 
-    if (responseData[0] && form.userFragment == "") {
+    if (savedStory[0] && form.userFragment == "") {
       contextFragment = responseData[0].text;
       //console.log({ card: result[0].deckIndex, text: result[0].text });
       return contextFragment;
     }
 
-    if (responseData[0]) {
-      contextFragment = responseData[0].text + "\n\n" + form.userFragment;
+    if (savedStory[0]) {
+      contextFragment = savedStory[0].text + "\n\n" + form.userFragment;
       //console.log({ card: result[0].deckIndex, text: result[0].text });
       return contextFragment;
     }
@@ -203,41 +221,41 @@ function StyledJournal(props) {
     //setSentitmentbar(false);
   };
 
-  const testAiTextGen = async (form) => {
-    try {
-      const res = await fetch("/api/openai", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+  // const testAiTextGen = async (form) => {
+  //   try {
+  //     const res = await fetch("/api/openai", {
+  //       method: "POST",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(form),
+  //     });
 
-      // Throw error with status code in case Fetch API req failed
-      if (!res.ok) {
-        throw new Error(res.status);
-      }
-      const { data, prompt, fragment, orientation, deckIndex } =
-        await res.json();
-      console.log({ data: data, prompt: prompt });
-      setForm({
-        ...form,
-        userPrompt: "",
-        ediFragment: data,
-      });
+  //     // Throw error with status code in case Fetch API req failed
+  //     if (!res.ok) {
+  //       throw new Error(res.status);
+  //     }
+  //     const { data, prompt, fragment, orientation, deckIndex } =
+  //       await res.json();
+  //     console.log({ data: data, prompt: prompt });
+  //     setForm({
+  //       ...form,
+  //       userPrompt: "",
+  //       ediFragment: data,
+  //     });
 
-      setStory((arr) => [...arr, { prompt: prompt, fragment: "", text: data }]);
-    } catch (error) {
-      setForm({
-        ...form,
-        userPrompt: "",
-        ediFragment: "...",
-      });
-      console.log("error");
-      //setMessage("Failed to prompt system");
-    }
-  };
+  //     setStory((arr) => [...arr, { prompt: prompt, fragment: "", text: data }]);
+  //   } catch (error) {
+  //     setForm({
+  //       ...form,
+  //       userPrompt: "",
+  //       ediFragment: "...",
+  //     });
+  //     console.log("error");
+  //     //setMessage("Failed to prompt system");
+  //   }
+  // };
 
   const formValidate = () => {
     let err = {};
@@ -250,10 +268,13 @@ function StyledJournal(props) {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    if (event != null) {
+      event.preventDefault();
+    }
 
     //console.log({ context: handleContext() });
-    //setPrompting(true);
+    setPrompting(true);
+
     const noModel = "";
     const cheapModel = "text-ada-001";
     const middleModel = "text-curie-001";
@@ -261,9 +282,16 @@ function StyledJournal(props) {
 
     const toSubmit = {
       ...form,
-      model: noModel,
-      occultInfluence: occultInfluence,
+      userFragment: handleFragmentContext(),
       userPrompt: handlePromptContext(),
+      maxToken: 250,
+      model: noModel,
+      role: "You are an avid and cunning story teller, You always come up with enagaging twists and insight plot elements",
+      story: Constants.STORY,
+      //username: handleUserNameSplit(session.user.name),
+      deckIndex: deckIndex,
+      //orientation: handleOrientation(),
+      occultInfluence: occultInfluence,
     };
 
     console.log({ form: toSubmit });
@@ -273,7 +301,7 @@ function StyledJournal(props) {
     if (Object.keys(errs).length === 0) {
       //handleClose();
 
-      testAiTextGen(toSubmit);
+      postData(toSubmit);
       //forNewPrompt ? postData(form) : putData(form);
     } else {
       setPrompting(false);
@@ -288,21 +316,47 @@ function StyledJournal(props) {
     });
   };
 
-  // const MINUTE_MS = 60000;
+  const MINUTE_MS = 120000;
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     console.log("Logs every minute");
-  //     handleSubmit();
-  //   }, MINUTE_MS);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log(savedStory);
+      form.userPrompt =
+        "[" +
+        savedStory[savedStory.length - 1].text +
+        "]" +
+        ": continue the plot";
+      console.log("Logs every minute");
+      handleSubmit();
+    }, MINUTE_MS);
 
-  //   return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  // }, []);
+    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, []);
+
   // #endregion function Methods
+  if (prompting && !data) {
+    return (
+      <Dialog open={prompting}>
+        <Box display="flex" justifyContent="center">
+          <CircularProgress sx={{ ml: 2, mt: 2, mb: 2 }} color="primary" />
+          <DialogTitle>
+            <Typography
+              sx={{ mt: 1 }}
+              color="primary.main"
+              variant="subtitle1"
+              component="p"
+            >
+              {`Letting Ada do her divination`}
+            </Typography>
+          </DialogTitle>
+        </Box>
+      </Dialog>
+    );
+  }
 
   return (
     <>
-      <Fab
+      {/* <Fab
         sx={{
           position: "sticky",
           zIndex: 1,
@@ -315,17 +369,17 @@ function StyledJournal(props) {
         //variant="extended"
         color="default"
         aria-label="menu"
-        //onClick={toggleDrawer("right", true)}
+        onClick={toggleDrawer("right", true)}
       >
         <SettingsIcon fontSize="large" />
-        {/* Ada */}
-      </Fab>
+       
+      </Fab> */}
       {/* <Divider sx={{ mt: 6, mb: 2 }} variant="fullWidth" component="div" /> */}
 
       <List sx={{ margin: "0 auto", width: "100%" }}>
-        {story //responseData
-          //.slice(0)
-          //.reverse()
+        {storyData //responseData
+          .slice(0)
+          .reverse()
           .map((doc, index) => (
             <Box key={index}>
               <Divider sx={{ mt: 4, mb: 4 }} component="div" />
@@ -388,7 +442,7 @@ function StyledJournal(props) {
               color={occultInfluence ? "success" : "secondary"}
               onClick={handleSetOccult}
             >
-              {occultInfluence ? "Occult" : "No Occult"}
+              {occultInfluence ? "Arcana" : "No Arcana"}
             </Button>
             <Divider sx={{ my: 1 }} orientation="vertical" flexItem />
             {/* <Button
@@ -416,7 +470,7 @@ function StyledJournal(props) {
                 id="userPrompt"
                 label="Prompt"
                 type="prompt"
-                color="secondary"
+                color="success"
                 placeholder={"..."}
                 value={form.userPrompt}
                 onChange={handleChange}
@@ -424,15 +478,15 @@ function StyledJournal(props) {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Button
+                      {/* <Button
                         //sx={{ mt: 1 }}
                         aria-label="cycle"
                         onClick={handleSetAction}
                         color="secondary"
                       >
-                        {/* <ChangeCircleOutlinedIcon /> */}
+                       
                         {action.actions[action.index]}
-                      </Button>
+                      </Button> */}
                     </InputAdornment>
                   ),
                   endAdornment: (
@@ -441,7 +495,7 @@ function StyledJournal(props) {
                         sx={{ transform: "rotate(-45deg)" }}
                         size="large"
                         edge="start"
-                        color="secondary"
+                        color="success"
                         aria-label="submit prompt"
                         onClick={handleSubmit}
                         //sx={{ mr: 2 }}
@@ -463,7 +517,7 @@ function StyledJournal(props) {
                 id="userFragment"
                 label="Fragment"
                 type="xtra"
-                color="primary"
+                color="success"
                 placeholder={"..."}
                 //value={form.userPrompt}
                 //onChange={handleChange}
@@ -487,7 +541,7 @@ function StyledJournal(props) {
                         //sx={{ transform: "rotate(-45deg)" }}
                         size="large"
                         edge="start"
-                        color="primary"
+                        color="success"
                         aria-label="add fragment"
                         //onClick={toggleDrawer("right", true)}
                         //sx={{ mr: 2 }}
@@ -507,7 +561,7 @@ function StyledJournal(props) {
               flexItem
             />
           </Box>
-          <Box justifyContent={"center"} alignItems={"center"} display="flex">
+          {/* <Box justifyContent={"center"} alignItems={"center"} display="flex">
             <Typography
               sx={{ display: { xs: "none", md: "flex" } }}
               variant="h6"
@@ -520,14 +574,14 @@ function StyledJournal(props) {
               size="large"
               edge="start"
               color="inherit"
-              disabled
+              //disabled
               aria-label="close menu"
               onClick={toggleDrawer("right", true)}
               //sx={{ mr: 2 }}
             >
               <ArrowForwardIosRoundedIcon />
             </IconButton>
-          </Box>
+          </Box> */}
 
           {/* <Typography variant="h6" component="div" sx={{ margin: "0 auto" }}>
             Journal

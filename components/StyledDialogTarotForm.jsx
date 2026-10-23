@@ -124,7 +124,7 @@ function StyledDialogTarotForm(props) {
       <DialogContent>
         <DialogContentText
           sx={{ whiteSpace: "pre-line" }}
-          paragraph
+          component="p"
           gutterBottom
         >
           {`The idea is to use the card reading to illuminate a path forward, 

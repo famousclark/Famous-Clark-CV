@@ -71,6 +71,7 @@ function Tarot() {
   });
 
   const [hand, setHand] = React.useState([]);
+  const [queryButtontState, setQueryButtonState] = React.useState(true);
   const [prompting, setPrompting] = React.useState(false);
   const [snackbar, setSnackbar] = React.useState(false);
   const [transition, setTransition] = React.useState(undefined);
@@ -89,10 +90,12 @@ function Tarot() {
   };
 
   const handleClickOpen = () => {
+    setQueryButtonState(false);
     setOpen(true);
   };
 
   const handleClose = () => {
+    setQueryButtonState(true);
     setOpen(false);
   };
 
@@ -108,6 +111,7 @@ function Tarot() {
     });
     await delay(2000);
     setPrompting(false);
+    setQueryButtonState(false);
   };
   //for dialogue--------------------------------------------
   const postData = async (form) => {
@@ -154,7 +158,7 @@ function Tarot() {
         }}
       >
         <Paper elevation={2}>
-          <Container component="main" sx={{ mt: 8, mb: 4 }} maxWidth="xl">
+          <Container component="main" sx={{ mt: 12, mb: 4 }} maxWidth="xl">
             <Typography
               color={theme.palette.primary.main}
               variant="h2"
@@ -169,16 +173,15 @@ function Tarot() {
               component="h2"
               gutterBottom
             >
-              {
-                "Tarot Reading based from Ada, The Gestalt Journal's Symbiotic Intelligence (SI)"
-              }
+              {"Artifical Intelligence Mixing with Occult Practices."}
             </Typography>
           </Container>
         </Paper>
         <Container component="main" sx={{ mb: 12 }} maxWidth="xl">
           <StyledFab
             variant="extended"
-            color="secondary"
+            disabled={!queryButtontState ? true : false}
+            color={queryButtontState ? "success" : "secondary"}
             aria-label="add"
             onClick={handleClickOpen}
           >
@@ -190,6 +193,7 @@ function Tarot() {
             hand={hand}
             postData={postData}
             setHand={setHand}
+            setQueryButtonState={setQueryButtonState}
             setPrompting={setPrompting}
             prompting={prompting}
             setResult={setResult}
@@ -208,12 +212,13 @@ function Tarot() {
             handleClose={handleClose}
           />
         </Dialog>
-        <StyledBottomAppBar bottom={true} />
+        <StyledBottomAppBar /*bottom={true}*/ />
       </Box>
       <Snackbar
         open={snackbar}
         onClose={handleCloseSnackBar}
-        TransitionComponent={transition}
+        //TransitionComponent={transition}
+        slots={{ transition: transition }}
         message="I love snacks"
         key={transition ? transition.name : ""}
       >

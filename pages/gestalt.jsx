@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import * as Constants from "../constants";
 
 import { getSession, useSession, signIn } from "next-auth/react";
-import { useRouter } from "next/router";
+//import { useRouter } from "next/router";
 
 import useSWR, { SWRConfig } from "swr";
 
@@ -69,11 +69,11 @@ const TransitionRight = (props) => {
 
 // #region Helper Methods
 const useResponsesAPI = () => {
-  const { data, error } = useSWR("api_responses");
+  //const { data, error } = useSWR("api_responses");
   //console.log({ data });
   return {
-    responseData: data,
-    responseError: !data & error,
+    responseData: "", //data,
+    responseError: "", //!data & error,
   };
 };
 
@@ -87,35 +87,35 @@ const scrollToBottom = (ref) => {
   ref.current?.scrollIntoView({ behavior: "smooth" });
 };
 
-const testAiTextGen = async () => {
-  try {
-    const res = await fetch("/api/aitextgen", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ first: "famous", last: "clark" }),
-    });
+// const testAiTextGen = async () => {
+//   try {
+//     const res = await fetch("/api/aitextgen", {
+//       method: "POST",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ first: "famous", last: "clark" }),
+//     });
 
-    // Throw error with status code in case Fetch API req failed
-    if (!res.ok) {
-      throw new Error(res.status);
-    }
-    const { data } = await res.json();
-    console.log({ data: data });
-  } catch (error) {
-    console.log("error");
-    //setMessage("Failed to prompt system");
-  }
-};
+//     // Throw error with status code in case Fetch API req failed
+//     if (!res.ok) {
+//       throw new Error(res.status);
+//     }
+//     const { data } = await res.json();
+//     console.log({ data: data });
+//   } catch (error) {
+//     console.log("error");
+//     //setMessage("Failed to prompt system");
+//   }
+// };
 
 // #endregion Helper Methods
 
 function GestaltDash(props) {
   // #region function props and variables
   const theme = useTheme();
-  const router = useRouter();
+  //const router = useRouter();
 
   const contentType = "application/json";
 
@@ -128,18 +128,18 @@ function GestaltDash(props) {
   //#endregion function props and variables
 
   // #region useSWR, useState, useSession
-  const { data: session } = useSession();
-  const { responseData, responseError } = useResponsesAPI();
+  //const { data: session } = useSession();
+  //const { responseData, responseError } = useResponsesAPI();
 
-  const responsesEndRef = useRef(null);
+  //const responsesEndRef = useRef(null);
 
-  useEffect(() => {
-    scrollToBottom(responsesEndRef);
-  }, [session]);
+  // useEffect(() => {
+  //   scrollToBottom(responsesEndRef);
+  // }, [session]);
 
-  useEffect(() => {
-    scrollToBottom(responsesEndRef);
-  }, [responseData]);
+  // useEffect(() => {
+  //   scrollToBottom(responsesEndRef);
+  // }, [responseData]);
 
   const [state, setState] = React.useState({
     top: false,
@@ -254,95 +254,95 @@ function GestaltDash(props) {
   //   );
   // }
 
-  if (responseError) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh",
-        }}
-      >
-        <Container component="main" sx={{ mt: 8, mb: 12 }} maxWidth="lg">
-          <Typography
-            color={theme.palette.error.main}
-            variant="h2"
-            component="h1"
-            gutterBottom
-          >
-            The Gestalt Game
-          </Typography>
-          <Typography
-            color={theme.palette.secondary.dark}
-            variant="h5"
-            component="h2"
-            gutterBottom
-          >
-            {
-              "A Feminist, Western Techno-Occultist, Generative Game Inspired by Pamela (Pixie) Colman Smith's Tarot Illustrations"
-            }
-          </Typography>
-          <Divider variant="fullwidth" />
+  // if (responseError) {
+  //   return (
+  //     <Box
+  //       sx={{
+  //         display: "flex",
+  //         flexDirection: "column",
+  //         minHeight: "100vh",
+  //       }}
+  //     >
+  //       <Container component="main" sx={{ mt: 8, mb: 12 }} maxWidth="lg">
+  //         <Typography
+  //           color={theme.palette.error.main}
+  //           variant="h2"
+  //           component="h1"
+  //           gutterBottom
+  //         >
+  //           The Gestalt Game
+  //         </Typography>
+  //         <Typography
+  //           color={theme.palette.secondary.dark}
+  //           variant="h5"
+  //           component="h2"
+  //           gutterBottom
+  //         >
+  //           {
+  //             "A Feminist, Western Techno-Occultist, Generative Game Inspired by Pamela (Pixie) Colman Smith's Tarot Illustrations"
+  //           }
+  //         </Typography>
+  //         <Divider variant="fullwidth" />
 
-          <Typography
-            sx={{ mt: 6 }}
-            color={theme.palette.error.main}
-            variant="h4"
-            component="h3"
-            gutterBottom
-          >
-            {"An Error Occured, Please Reload the Page."}
-          </Typography>
-        </Container>
-        <StyledBottomAppBar />
-      </Box>
-    );
-  }
+  //         <Typography
+  //           sx={{ mt: 6 }}
+  //           color={theme.palette.error.main}
+  //           variant="h4"
+  //           component="h3"
+  //           gutterBottom
+  //         >
+  //           {"An Error Occured, Please Reload the Page."}
+  //         </Typography>
+  //       </Container>
+  //       <StyledBottomAppBar />
+  //     </Box>
+  //   );
+  // }
 
-  if (!responseData) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "100vh",
-        }}
-      >
-        <Container component="main" sx={{ mt: 8, mb: 12 }} maxWidth="lg">
-          <Typography
-            color={theme.palette.primary.main}
-            variant="h2"
-            component="h1"
-            gutterBottom
-          >
-            The Gestalt Game
-          </Typography>
-          <Typography
-            color={theme.palette.secondary.dark}
-            variant="h5"
-            component="h2"
-            gutterBottom
-          >
-            {
-              "A Feminist, Western Techno-Occultist, Generative Game Inspired by Pamela (Pixie) Colman Smith's Tarot Illustrations"
-            }
-          </Typography>
-          <Divider variant="fullwidth" />
+  // if (!responseData) {
+  //   return (
+  //     <Box
+  //       sx={{
+  //         display: "flex",
+  //         flexDirection: "column",
+  //         minHeight: "100vh",
+  //       }}
+  //     >
+  //       <Container component="main" sx={{ mt: 8, mb: 12 }} maxWidth="lg">
+  //         <Typography
+  //           color={theme.palette.primary.main}
+  //           variant="h2"
+  //           component="h1"
+  //           gutterBottom
+  //         >
+  //           The Gestalt Game
+  //         </Typography>
+  //         <Typography
+  //           color={theme.palette.secondary.dark}
+  //           variant="h5"
+  //           component="h2"
+  //           gutterBottom
+  //         >
+  //           {
+  //             "A Feminist, Western Techno-Occultist, Generative Game Inspired by Pamela (Pixie) Colman Smith's Tarot Illustrations"
+  //           }
+  //         </Typography>
+  //         <Divider variant="fullwidth" />
 
-          <Typography
-            sx={{ mt: 6 }}
-            color={theme.palette.primary.dark}
-            variant="h4"
-            component="h3"
-            gutterBottom
-          >
-            {"Loading In The Occult Magic."}
-          </Typography>
-        </Container>
-        <StyledBottomAppBar />
-      </Box>
-    );
-  }
+  //         <Typography
+  //           sx={{ mt: 6 }}
+  //           color={theme.palette.primary.dark}
+  //           variant="h4"
+  //           component="h3"
+  //           gutterBottom
+  //         >
+  //           {"Loading In The Occult Magic."}
+  //         </Typography>
+  //       </Container>
+  //       <StyledBottomAppBar />
+  //     </Box>
+  //   );
+  // }
 
   // #endregion Session and data - error | loading | authentication checks
 
@@ -580,13 +580,13 @@ function GestaltDash(props) {
                   postResponse={postResponse}
                   waffling={waffling}
                   notSaved={result}
-                  result={responseData}
+                  result={""} //responseData}
                 />
               </Container>
             </Box>
           </Drawer>
           <StyledJournal
-            deckIndex={responseData.length % 22}
+            deckIndex={0} //responseData.length % 22}
             toggleDrawer={toggleDrawer}
           />
         </Container>
@@ -594,7 +594,7 @@ function GestaltDash(props) {
 
       <Dialog open={open} onClose={handleClose}>
         <StyledDialogPromptForm
-          deckIndex={responseData.length % 22}
+          deckIndex={0} //responseData.length % 22}
           setPrompting={setPrompting}
           promptForm={promptForm}
           form={form}
@@ -629,53 +629,54 @@ function GestaltDash(props) {
   // #endregion function rendering
 }
 
-function Gestalt({ fallback }) {
+function Gestalt() {
   //console.log({ fallback });
 
   // #region function rendering
 
   return (
-    <SWRConfig value={{ fallback }}>
-      <GestaltDash />
-    </SWRConfig>
+    // <SWRConfig value={{ fallback }}>
+    <GestaltDash />
+    //   </SWRConfig>
   );
 
   // #endregion function rendering
 }
 
-export async function getServerSideProps(context) {
-  // #region function data fetching
-  await dbConnect();
+// export async function getServerSideProps(context) {
+//   // #region function data fetching
+//   await dbConnect();
 
-  const session = await getSession(context);
-  const userName = session?.user.email;
-  const testName = "Gwyn";
-  /* find all the data in our database */
-  const result = await Response.find({ username: userName })
-    .sort({ time_stamped: -1 })
-    .limit(22);
-  const responses = result.map((doc) => {
-    const response = doc.toObject();
-    response._id = response._id.toString();
-    response.time_stamped = response.time_stamped.toString();
-    //response.prompt_id[0] = response.prompt_id[0].toString();
+//   const session = await getSession(context);
+//   const userName = session?.user.email;
+//   const testName = "Gwyn";
+//   /* find all the data in our database */
+//   const result = await Response.find({ username: userName })
+//     .sort({ time_stamped: -1 })
+//     .limit(22);
+//   const responses = result.map((doc) => {
+//     const response = doc.toObject();
+//     response._id = response._id.toString();
+//     response.time_stamped = response.time_stamped.toString();
+//     //response.prompt_id[0] = response.prompt_id[0].toString();
 
-    return response;
-  });
+//     return response;
+//   });
 
-  // #endregion function data fetching
+//   // #endregion function data fetching
 
-  // #region function return props
-  return {
-    props: {
-      fallback: {
-        api_responses: responses,
-        api_session: session,
-      },
-    },
-  };
+//   // #region function return props
 
-  // #endregion function return props
-}
+//   return {
+//     props: {
+//       fallback: {
+//         api_responses: responses,
+//         api_session: session,
+//       },
+//     },
+//   };
+
+//   // #endregion function return props
+// }
 
 export default Gestalt;

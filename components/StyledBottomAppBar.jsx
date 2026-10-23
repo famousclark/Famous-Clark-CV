@@ -42,6 +42,7 @@ function StyledBottomAppBar(props) {
     { name: "Home", route: "/" },
     //{ name: "Gestalt", route: "gestalt/" },
     { name: "Tarot", route: "tarot/" },
+    { name: "Story", route: "story/" },
   ];
   const settings = [/*"Profile", "Account", "Dashboard",*/ "Auth"];
   // #endregion function Props and variables
@@ -128,8 +129,10 @@ function StyledBottomAppBar(props) {
             >
               {pages.map((page, index) => (
                 <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Link href={page.route}>
-                    <Typography textAlign="center">{`| ${page.name}`}</Typography>
+                  <Link style={{ textDecoration: "none" }} href={page.route}>
+                    <Typography
+                      sx={{ color: "white", textAlign: "center" }}
+                    >{`| ${page.name}`}</Typography>
                   </Link>
                 </MenuItem>
               ))}
@@ -151,8 +154,13 @@ function StyledBottomAppBar(props) {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                <Link href={page.route}>
-                  <Typography textAlign="center">{`| ${page.name}`}</Typography>
+                <Link style={{ textDecoration: "none" }} href={page.route}>
+                  <Typography
+                    sx={{
+                      color: "white",
+                      textAlign: "center",
+                    }}
+                  >{`| ${page.name}`}</Typography>
                 </Link>
               </Button>
             ))}

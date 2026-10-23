@@ -85,7 +85,7 @@ function StyledActionCard(props) {
     index,
     handleClear,
     handleSubmit,
-    handleWaffling,
+    //handleWaffling,
     elevation,
     actions,
     wafflingData,
@@ -125,7 +125,7 @@ function StyledActionCard(props) {
       index={index}
       handleClear={handleClear}
       handleSubmit={handleSubmit}
-      handleWaffling={handleWaffling}
+      //handleWaffling={handleWaffling}
       elevation={elevation}
       actions={actions}
       wafflingData={wafflingData}
@@ -145,7 +145,7 @@ function StyledCardLayout(props) {
     actions,
     elevation,
     handleSubmit,
-    handleWaffling,
+    //handleWaffling,
     handleClear,
   } = props;
 
@@ -230,7 +230,7 @@ function StyledCardLayout(props) {
                     color="default"
                     aria-label="api"
                     sx={{ mt: 1 }}
-                    onClick={handleWaffling}
+                    //onClick={handleWaffling}
                   >
                     <ApiRoundedIcon />
                   </StyledFab>
@@ -404,7 +404,7 @@ function StyledResponseList(props) {
     notSaved,
     waffling,
     postResponse,
-    postWaffling,
+    //postWaffling,
     setResult,
     setWaffling,
   } = props;
@@ -412,7 +412,7 @@ function StyledResponseList(props) {
   // #endregion function Props
 
   // #region SWR and useState
-  const { result, isLoading } = useResponseAPI();
+  //const { result, isLoading } = useResponseAPI();
 
   const [errors, setErrors] = React.useState({});
   const [snackbar, setSnackbar] = React.useState(false);
@@ -487,12 +487,12 @@ function StyledResponseList(props) {
       <List sx={{ width: "100%" }}>
         <StyledActionCard
           // sess={handleUserNameSplit(session.user.name)}
-          sess={"Human"}
+          sess={"GuestPlayer"}
           prompting={prompting}
-          index={result.length % 22}
+          index={0} //result.length % 22}
           handleClear={handleClear}
           handleSubmit={handleSubmit}
-          handleWaffling={handleWaffling}
+          //handleWaffling={handleWaffling}
           elevation={6}
           actions={true}
           wafflingData={waffling}
@@ -502,8 +502,8 @@ function StyledResponseList(props) {
         <Divider sx={{ mt: 4, mb: 4 }} component="div" />
         <StyledCardLayoutArray
           // sess={handleUserNameSplit(session.user.name)}
-          sess={"Human"}
-          result={result}
+          sess={"Taco"}
+          result={setResult.text} //result}
         />
       </List>
       <Snackbar

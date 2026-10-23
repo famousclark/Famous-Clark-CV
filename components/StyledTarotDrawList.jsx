@@ -28,7 +28,8 @@ import { styled } from "@mui/material/styles";
 
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import ApiRoundedIcon from "@mui/icons-material/ApiRounded";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
 // #region Helper Styled Components
@@ -98,7 +99,7 @@ function StyledActionCard(props) {
   if (prompting && !data) {
     return (
       <Dialog open={prompting}>
-        <Box display="flex" justifyContent="center">
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
           <CircularProgress sx={{ ml: 2, mt: 2, mb: 2 }} color="primary" />
           <DialogTitle>
             <Typography
@@ -119,13 +120,15 @@ function StyledActionCard(props) {
   // #region function rendering
   return (
     <Box>
-      <Box display="flex" alignItems="center" justifyContent="center">
+      <Box
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+      >
         {hand.length < 5 ? (
           <StyledFab
             disabled={deckQuestionData.prompt == "" ? true : false}
             variant="extended"
             size="medium"
-            color="primary"
+            color="success"
             aria-label="draw"
             onClick={handleDrawCard}
           >
@@ -133,11 +136,11 @@ function StyledActionCard(props) {
             Draw A Card
           </StyledFab>
         ) : (
-          <Box display="flex">
+          <Box sx={{ display: "flex" }}>
             <StyledFab
               variant="extended"
               size="medium"
-              color="secondary"
+              color="success"
               aria-label="draw"
               onClick={handleGetReading}
             >
@@ -184,7 +187,7 @@ function StyledActionCard(props) {
               align="center"
               color="text.primary"
               variant="subtitle1"
-              paragraph
+              component="p"
               gutterBottom
             >
               {deckQuestionData.prompt}
@@ -229,6 +232,7 @@ function StyledTarotDrawList(props) {
     setHand,
     postData,
     deckQuestionData,
+    setQueryButtonState,
     setPrompting,
     prompting,
     setResult,
@@ -248,6 +252,7 @@ function StyledTarotDrawList(props) {
   // #region function Methods
 
   const handleResetDeck = () => {
+    setQueryButtonState(true);
     setDeck(defaultDeck);
     setHand([]);
     setResult({
@@ -288,6 +293,7 @@ function StyledTarotDrawList(props) {
   };
 
   const handleGetReading = () => {
+    //setQueryButtonState(true);
     const errs = formValidate();
     const noModel = "";
     const cheapModel = "text-ada-001";
@@ -299,6 +305,8 @@ function StyledTarotDrawList(props) {
       setPrompting(true);
       const form = {
         model: noModel,
+        maxToken: 750,
+        role: "You are a helpful, smart, kind, and LGBTQ supportive fortune teller. You always try your of best give helpful if not mysterious fortunes.",
         userPrompt: deckQuestionData.prompt,
         userFragment: hand,
         story: Constants.TAROT,
@@ -355,17 +363,15 @@ function StyledTarotDrawList(props) {
       />
 
       <Grid
-        sx={{ mt: 3, mb: 5 }}
+        sx={{ mt: 3, mb: 5, justifyContent: "center", alignItems: "stretch" }}
         container
         spacing={2}
-        justifyContent="center"
-        alignItems="stretch"
       >
         {hand
           .slice(0)
           .reverse()
           .map((card, index) => (
-            <Grid key={index} item xs={12} sm={6} md={4} lg={4}>
+            <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 4 }}>
               <Card elevation={2}>
                 <CardContent>
                   <Typography align="center" component="div" variant="h5">

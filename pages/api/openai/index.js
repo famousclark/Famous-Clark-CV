@@ -15,6 +15,11 @@ const openai = new OpenAI({
   //organization: "org-n0vsTASY1T9qSHjcCkgFmJ3K",
 });
 
+const client = new OpenAI({
+  baseURL: "http://localhost:1234/v1",
+  apiKey: "lm-studio", // A placeholder key is required but ignored locally
+});
+
 function generateTarotInsight(deckIndex, orientation) {
   let deckInsightString = [];
   if (orientation == Constants.UPRIGHT) {
@@ -48,7 +53,7 @@ function unpackHand(hand) {
     // }
     // console.log(tones);
     unpackedHand.push(
-      `- ${Constants.ArcanaEnglishTags[card.index]} ${card.orientation}`
+      `- ${Constants.ArcanaEnglishTags[card.index]} ${card.orientation}`,
     );
   });
   const tarotHand = unpackedHand.join("\r\n");
@@ -63,7 +68,7 @@ function generatePrompt(
   fragment = "",
   story = Constants.STORY,
   orientation = Constants.UPRIGHT,
-  occultInfluence = true
+  occultInfluence = true,
 ) {
   switch (story) {
     case Constants.STORY:
@@ -93,7 +98,7 @@ function generatePrompt(
     case Constants.TAROT:
       //unpackHand(fragment);
       const tarotPrompt = `${prompt}:\n Tarot Cards:\n ${unpackHand(
-        fragment
+        fragment,
       )}\n Give Taort reading:\n`;
       // const tarotPrompt = `${prompt}:\n Tarot Cards:\n ${unpackHand(
       //   fragment
@@ -128,15 +133,42 @@ export default async function handler(req, res) {
     case "POST":
       try {
         const noModel = "";
+        const cheapModel_2026 = "gpt-6-luna";
         const cheapModel = "text-ada-001";
         const middleModel = "text-curie-001";
         const bestModel = "text-davinci-002";
+        const newModel = "gpt-3.5-turbo-0125";
         //console.log(req.body);
-        const completion = await openai.chat.completions.create({
+        // const completion = await openai.responses.create({
+        //   model: cheapModel_2026, //"lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF",
+        //   reasoning: { effort: "low" },
+        //   input: [
+        //     {
+        //       role: "system",
+        //       content: req.body.role,
+        //       //"You are a helpful, smart, kind, and LGBTQ supportive fortune teller. You always fulfill try your of best give helpful if not mysterious fortunes.",
+        //     },
+        //     {
+        //       role: "user",
+        //       content: generatePrompt(
+        //         req.body.deckIndex,
+        //         req.body.userPrompt,
+        //         req.body.userFragment,
+        //         req.body.story,
+        //         req.body.orientation,
+        //         req.body.occultInfluence,
+        //       ),
+        //     },
+        //   ],
+        // });
+
+        const completion = await client.chat.completions.create({
+          model: "lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF",
           messages: [
             {
               role: "system",
-              content: "You are a fortune teller designed to output fortunes.",
+              content: req.body.role,
+              //"You are a helpful, smart, kind, and LGBTQ supportive fortune teller. You always fulfill try your of best give helpful if not mysterious fortunes.",
             },
             {
               role: "user",
@@ -146,27 +178,39 @@ export default async function handler(req, res) {
                 req.body.userFragment,
                 req.body.story,
                 req.body.orientation,
-                req.body.occultInfluence
+                req.body.occultInfluence,
               ),
             },
           ],
-          model: "gpt-3.5-turbo-0125",
-          //response_format: { type: "json_object" },
+          max_tokens: req.body.maxToken,
+          //stream: true,
         });
-        //console.log(completion);
-        console.log(completion.choices[0].message.content);
-        // const completion = await openai.createCompletion(req.body.model, {
-        //   prompt: generatePrompt(
-        //     req.body.deckIndex,
-        //     req.body.userPrompt,
-        //     req.body.userFragment,
-        //     req.body.story,
-        //     req.body.orientation,
-        //     req.body.occultInfluence
-        //   ),
-        //   max_tokens: 256,
-        //   temperature: 0.5,
-        // });
+
+        /*const completion = await openai.chat.completions.create({
+          model: cheapModel_2026,
+          messages: [
+            {
+              role: "system",
+              content: req.body.role,
+              //"You are a helpful, smart, kind, and LGBTQ supportive fortune teller. You always fulfill try your of best give helpful if not mysterious fortunes.",
+            },
+            {
+              role: "user",
+              content: generatePrompt(
+                req.body.deckIndex,
+                req.body.userPrompt,
+                req.body.userFragment,
+                req.body.story,
+                req.body.orientation,
+                req.body.occultInfluence,
+              ),
+            },
+          ],
+          max_tokens: req.body.maxToken,
+          //stream: true,
+        });
+        */
+        console.log(completion.choices);
 
         res.status(201).json({
           success: true,
@@ -178,6 +222,9 @@ export default async function handler(req, res) {
         });
       } catch (error) {
         console.log(error);
+        console.error("OpenAI error message:", error.message);
+        console.error("OpenAI error code:", error.code);
+        console.error("OpenAI error status:", error.status);
         res.status(400).json({ success: false });
       }
       break;

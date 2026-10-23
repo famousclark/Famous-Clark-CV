@@ -90,7 +90,8 @@ function StyledDialogPromptForm(props) {
   // #endregion function Props and variables
 
   // #region SWR and useState
-  const { result, isLoading } = useResponseAPI();
+  //const { result, isLoading } = useResponseAPI();
+  const result = [{}];
   const { mutate } = useSWRConfig();
 
   const [errors, setErrors] = useState({});
@@ -203,7 +204,8 @@ function StyledDialogPromptForm(props) {
       userFragment: handleFragmentContext(),
       userPrompt: handlePromptContext(),
       model: noModel,
-      username: handleUserNameSplit(session.user.name),
+      story: Constants.STORY,
+      //username: handleUserNameSplit(session.user.name),
       deckIndex: deckIndex,
       orientation: handleOrientation(),
       occultInfluence: occultInfluence,
