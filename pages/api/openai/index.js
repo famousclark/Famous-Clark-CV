@@ -161,30 +161,47 @@ export default async function handler(req, res) {
         //     },
         //   ],
         // });
+        console.log(req.body);
+        const fullPlainTextPrompt = `System: ${req.body.role}\n\nUser: ${generatePrompt(
+          req.body.deckIndex,
+          req.body.userPrompt,
+          req.body.userFragment,
+          req.body.story,
+          req.body.orientation,
+          req.body.occultInfluence,
+        )}\n\nAssistant:`;
 
-        const completion = await client.chat.completions.create({
+        const completion = await client.completions.create({
           model: "lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF",
-          messages: [
-            {
-              role: "system",
-              content: req.body.role,
-              //"You are a helpful, smart, kind, and LGBTQ supportive fortune teller. You always fulfill try your of best give helpful if not mysterious fortunes.",
-            },
-            {
-              role: "user",
-              content: generatePrompt(
-                req.body.deckIndex,
-                req.body.userPrompt,
-                req.body.userFragment,
-                req.body.story,
-                req.body.orientation,
-                req.body.occultInfluence,
-              ),
-            },
-          ],
-          max_tokens: req.body.maxToken,
+          prompt: fullPlainTextPrompt,
+          max_tokens: parseInt(req.body.maxToken, 10) || 250,
+          temperature: 0.7,
           //stream: true,
         });
+        // const completion = await client.chat.completions.create({
+        //   model: "lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF",
+        //   messages: [
+        //     {
+        //       role: "system",
+        //       content: req.body.role,
+        //       //"You are a helpful, smart, kind, and LGBTQ supportive fortune teller. You always fulfill try your of best give helpful if not mysterious fortunes.",
+        //     },
+        //     {
+        //       role: "user",
+        //       content: generatePrompt(
+        //         req.body.deckIndex,
+        //         req.body.userPrompt,
+        //         req.body.userFragment,
+        //         req.body.story,
+        //         req.body.orientation,
+        //         req.body.occultInfluence,
+        //       ),
+        //     },
+        //   ],
+        //   max_tokens: req.body.maxToken,
+        //   response_format: { type: "text" },
+        //   //stream: true,
+        // });
 
         /*const completion = await openai.chat.completions.create({
           model: cheapModel_2026,
@@ -216,7 +233,7 @@ export default async function handler(req, res) {
           success: true,
           prompt: req.body.userPrompt,
           fragment: req.body.userFragment,
-          data: completion.choices[0].message.content,
+          data: completion.choices[0].text.trim(), //completion.choices[0].message.content,
           deckIndex: req.body.deckIndex,
           orientation: req.body.orientation,
         });

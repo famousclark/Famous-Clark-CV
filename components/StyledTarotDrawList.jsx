@@ -108,7 +108,7 @@ function StyledActionCard(props) {
               variant="subtitle1"
               component="p"
             >
-              {`Letting Ada do her divination`}
+              {`Processing divination`}
             </Typography>
           </DialogTitle>
         </Box>
@@ -205,7 +205,7 @@ function StyledActionCard(props) {
                   Divination
                 </Typography>
                 <Typography
-                  align="center"
+                  align="left"
                   color="text.primary"
                   variant="subtitle1"
                   paragraph
@@ -305,8 +305,8 @@ function StyledTarotDrawList(props) {
       setPrompting(true);
       const form = {
         model: noModel,
-        maxToken: 750,
-        role: "You are a helpful, smart, kind, and LGBTQ supportive fortune teller. You always try your of best give helpful if not mysterious fortunes.",
+        maxToken: 500,
+        role: "You are a helpful, smart, kind, and LGBTQ supportive fortune teller. You always try your of best give a single helpful if not mysterious and short fortune.",
         userPrompt: deckQuestionData.prompt,
         userFragment: hand,
         story: Constants.TAROT,
